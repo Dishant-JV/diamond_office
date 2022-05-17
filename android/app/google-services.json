@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "849900614768",
+    "project_id": "hira-of",
+    "storage_bucket": "hira-of.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849900614768:android:51052e3b838f113bbff0b5",
+        "android_client_info": {
+          "package_name": "com.example.diamond_office"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849900614768-4hfp2pg6uauh4mvm3igateqa1fgc5iht.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.diamond_office",
+            "certificate_hash": "09f190c547a1349ff580d4cd43ab5c2dfc585d44"
+          }
+        },
+        {
+          "client_id": "849900614768-3b9nq5rtnu5l6um95d7v3u72dgt9sr2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCRfbZFFd3RQKFdNwPxOF4ZcoScpkt-q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "849900614768-3b9nq5rtnu5l6um95d7v3u72dgt9sr2v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
