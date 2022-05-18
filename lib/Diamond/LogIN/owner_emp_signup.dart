@@ -210,7 +210,8 @@ class _OwnerEmpSignUpState extends State<OwnerEmpSignUp> {
                             color: Colors.blue,
                             fontWeight: FontWeight.w500,
                             fontSize: 16),
-                      ))
+                      )),
+                  Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom+10))
                 ],
               ),
             ),

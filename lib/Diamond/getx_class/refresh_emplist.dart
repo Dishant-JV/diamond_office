@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 
 class RefreshEmpList extends GetxController {
   RxList finalList = [].obs;
-  RxList lstLot=[].obs;
+  RxList lstLot = [].obs;
   RxBool isLoad = false.obs;
+  RxString toDate = "".obs;
+  RxString fromDate = "".obs;
 }

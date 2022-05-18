@@ -12,7 +12,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
 import 'Diamond/LogIN/login_1.dart';
-import 'Diamond/owner/real_time_database/real_time_database.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
@@ -46,7 +45,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(const GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    home: TestWidget(),
+    home: LogIN1(),
   ));
 }
 

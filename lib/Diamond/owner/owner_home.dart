@@ -19,16 +19,13 @@ class OwnerHome extends StatefulWidget {
 class _OwnerHomeState extends State<OwnerHome> {
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   String? businessId;
-  List finalList = [];
+  List finaEmplList = [];
   bool isLoad = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getBusinessId().then((value) {
-      getEmployeeData(value);
-    });
   }
 
   @override
@@ -89,28 +86,59 @@ class _OwnerHomeState extends State<OwnerHome> {
           ),
           isLoad == true
               ? Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: finalList.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EmployeeDetail(
-                                      uid: finalList[index]['uid'],
-                                    )));
-                      },
-                      child: Container(
-                          color: index % 2 == 0 ? Colors.grey.shade300 : null,
-                          padding: EdgeInsets.all(10),
+              : StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('Employee')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData && snapshot.data?.size != 0) {
+                     getBusinessId().then((value) {
+                       finaEmplList.clear();
+                       snapshot.data?.docs.map((DocumentSnapshot document) {
+                         Map a = document.data() as Map<String, dynamic>;
+                         if(a['businessId'].toString() == value){
+                           finaEmplList.add(a);
+                         }
+                       }).toList();
+                     });
+
+                      return ListView.builder(
+                          itemCount: finaEmplList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EmployeeDetail(
+                                              uid: finaEmplList[index]['uid'],
+                                            )));
+                              },
+                              child: Container(
+                                  color: index % 2 == 0
+                                      ? Colors.grey.shade300
+                                      : null,
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    finaEmplList[index]['name'],
+                                    style: TextStyle(fontSize: 22),
+                                  )),
+                            );
+                          });
+                    }
+                    return Container(
+                        width: double.infinity,
+                        child: Center(
                           child: Text(
-                            finalList[index]['name'],
-                            style: TextStyle(fontSize: 22),
-                          )),
-                    );
+                            "No Data",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: Colors.grey.shade400),
+                          ),
+                        ));
                   })
         ],
       ),
@@ -118,30 +146,30 @@ class _OwnerHomeState extends State<OwnerHome> {
   }
 
   Future getBusinessId() async {
-    setState(() {
-      isLoad = true;
-    });
+    // setState(() {
+    //   isLoad = true;
+    // });
     // SharedPreferences preferences = await SharedPreferences.getInstance();
     // businessId = preferences.getString("businessId");
     return FirebaseAuth.instance.currentUser!.uid;
   }
 
-  void getEmployeeData(String businessGetId) async {
-    finalList.clear();
-    print(businessGetId);
-    CollectionReference collectionReference = fireStore.collection("Employee");
-    QuerySnapshot querySnapshot = await collectionReference.get();
-    querySnapshot.docs.map((e) {
-      print(e.data());
-      Map data = e.data() as Map<String, dynamic>;
-      if (data['businessId'] == businessGetId) {
-        finalList.add(data);
-      }
-    }).toList();
-    setState(() {
-      isLoad = false;
-    });
-  }
+// void getEmployeeData(String businessGetId) async {
+//   finalList.clear();
+//   print(businessGetId);
+//   CollectionReference collectionReference = fireStore.collection("Employee");
+//   QuerySnapshot querySnapshot = await collectionReference.get();
+//   querySnapshot.docs.map((e) {
+//     print(e.data());
+//     Map data = e.data() as Map<String, dynamic>;
+//     if (data['businessId'] == businessGetId) {
+//       finalList.add(data);
+//     }
+//   }).toList();
+//   setState(() {
+//     isLoad = false;
+//   });
+// }
 
 // Future<Null> _selectDate(BuildContext context) async {
 //   var myFormat = DateFormat('d-MM-yyyy');

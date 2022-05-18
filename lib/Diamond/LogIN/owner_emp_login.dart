@@ -34,45 +34,48 @@ class _OwnerEmpLogINState extends State<OwnerEmpLogIN> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).padding.top +
-                  MediaQuery.of(context).size.height * 0.2,
-            ),
-            Text(
-              "Login",
-              style: TextStyle(
-                  fontWeight: FontWeight.w500, fontSize: 25, letterSpacing: 2),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            TextFieldConst.textFields(
-                "Email", emailController, TextInputType.emailAddress),
-            SizedBox(
-              height: 10,
-            ),
-            TextFieldConst.textFields(
-                "Password", passController, TextInputType.visiblePassword),
-            SizedBox(
-              height: 10,
-            ),
-            Obx(
-              () => InkWell(
-                  onTap: () {
-                    print(firebaseAuth.currentUser?.uid);
-                    controller.isLogINLoding.value = true;
-                    signIn();
-                  },
-                  child: controller.isLogINLoding.value == false
-                      ? TextFieldConst.submitButton()
-                      : CircularProgressIndicator()),
-            )
-          ],
+        child: SingleChildScrollView(
+          reverse: true,
+          child: Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).padding.top +
+                    MediaQuery.of(context).size.height * 0.2,
+              ),
+              Text(
+                "Login",
+                style: TextStyle(
+                    fontWeight: FontWeight.w500, fontSize: 25, letterSpacing: 2),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              TextFieldConst.textFields(
+                  "Email", emailController, TextInputType.emailAddress),
+              SizedBox(
+                height: 10,
+              ),
+              TextFieldConst.textFields(
+                  "Password", passController, TextInputType.visiblePassword),
+              SizedBox(
+                height: 10,
+              ),
+              Obx(
+                () => InkWell(
+                    onTap: () {
+                      print(firebaseAuth.currentUser?.uid);
+                      controller.isLogINLoding.value = true;
+                      signIn();
+                    },
+                    child: controller.isLogINLoding.value == false
+                        ? TextFieldConst.submitButton()
+                        : CircularProgressIndicator()),
+              ),
+              Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom+10))
+            ],
+          ),
         ),
       ),
     );
